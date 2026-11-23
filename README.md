@@ -45,6 +45,43 @@ Untuk pengerjaan tugas kali ini, saya menggunakan generative AI untuk memeriksa 
 
 - https://claude.ai/share/b10fa2f3-3c4b-4eb3-875b-ba5425d3912e
 
+## Riwayat perubahan - Tutorial 09 & Tugas 08
+
+1. **Implementasi Form Tambah Proyek (Tutorial 09):**
+   - Membuat halaman `ProjectFormPage` pada `lib/screens/project_form.dart` menggunakan `StatefulWidget`, `Form`, dan `GlobalKey<FormState>`.
+   - Menambahkan input nama proyek, deskripsi, kategori, teknologi, dan tautan proyek.
+   - Menambahkan validasi untuk nama serta deskripsi proyek, kemudian menampilkan ringkasan data melalui `AlertDialog` setelah input valid.
+2. **Implementasi Form Tambah Pengalaman (Tugas 08):**
+   - Membuat halaman baru `ExperienceFormPage` pada `lib/screens/experience_form.dart`.
+   - Menambahkan input judul pengalaman, deskripsi, kategori, status pengalaman, tanggal selesai, dan URL thumbnail opsional.
+   - Menggunakan `DropdownButtonFormField` untuk kategori, `SwitchListTile` untuk status masih berlangsung, serta `showDatePicker()` untuk memilih tanggal selesai.
+3. **Validasi dan Dialog Ringkasan:**
+   - Memvalidasi judul dan deskripsi agar tidak kosong atau hanya berisi spasi.
+   - Membatasi judul pengalaman hingga 255 karakter dan memvalidasi URL thumbnail jika pengguna mengisinya.
+   - Memastikan tanggal selesai dipilih ketika status pengalaman bukan sedang berlangsung.
+   - Menampilkan seluruh data pengalaman yang valid dalam `AlertDialog` dengan tombol `Tutup`.
+4. **Navigasi dan Drawer:**
+   - Menambahkan kartu `Tambah Pengalaman` pada halaman utama dengan ikon `work_outline` dan warna `Colors.orange`.
+   - Menggunakan `Navigator.push()` dari kartu aksi untuk membuka `ExperienceFormPage`, sehingga pengguna dapat kembali melalui tombol kembali bawaan.
+   - Menambahkan opsi `Add Experience` pada drawer serta menggunakan drawer yang sama pada halaman Home, Add Project, dan Add Experience.
+   - Mempertahankan opsi `Home` dan `Add Project` pada drawer untuk mendukung navigasi antarhalaman.
+
+## Tugas 8
+1. Navigator.push() menambahkan halaman baru ke atas tumpukan (stack) navigasi, sehingga halaman sebelumnya tetap ada di bawahnya dan pengguna bisa kembali lewat tombol back. Navigator.pushReplacement() mengganti halaman yang sedang tampil dengan halaman baru, jadi halaman lama dibuang dari stack dan pengguna tidak bisa kembali ke halaman tersebut. Navigator.pop() mengeluarkan halaman teratas dari stack sehingga tampilan kembali ke halaman di bawahnya. Untuk membuka formulir dari kartu aksi, metode yang digunakan adalah Navigator.push() (dengan MaterialPageRoute) di dalam onTap pada InkWell kartu, karena pengguna perlu bisa kembali ke halaman utama setelah selesai mengisi atau membatalkan formulir. Opsi Home di drawer membawa pengguna kembali ke halaman utama dengan Navigator.pushReplacement() ke halaman utama (MyHomePage). Dengan begitu halaman yang sedang aktif diganti oleh halaman utama, dan stack tidak menumpuk setiap kali pengguna berpindah lewat drawer.
+
+2. Scaffold berperan sebagai kerangka dasar halaman yang menyediakan slot standar, yaitu appBar di atas, drawer di sisi kiri, dan body untuk isi halaman. AppBar menjaga judul dan gaya bagian atas tetap seragam, sedangkan Drawer menyediakan menu navigasi yang sama di setiap halaman. Karena setiap halaman memakai susunan yang sama, pengguna selalu menemukan navigasi di tempat yang sama dan pengembang tidak perlu menulis ulang struktur dasar. Contoh penggunaan warna tema portofolio di lebih dari satu halaman: warna utama tema diambil lewat Theme.of(context).colorScheme.primary atau didefinisikan di ThemeData pada MaterialApp, lalu dipakai sebagai backgroundColor pada AppBar di halaman utama dan halaman formulir, serta sebagai warna header pada DrawerHeader. Dengan begitu perubahan warna cukup dilakukan di satu tempat dan langsung berlaku di semua halaman tersebut.
+
+3. Formulir dibuat dengan susunan Form yang berisi Column karena kolom cocok untuk menumpuk field input dari atas ke bawah secara berurutan, sehingga mudah dibaca dan diisi, terutama di layar ponsel. Widget pengatur jarak seperti Padding dan SizedBox memberi ruang antarfield dan di sekeliling tombol agar elemen tidak saling menempel dan tetap nyaman disentuh. Ketika ruang layar terbatas, misalnya saat papan ketik muncul atau layar dalam mode landscape, isi Column bisa melebihi tinggi layar dan menyebabkan overflow. Karena itu Column dibungkus SingleChildScrollView sebagai widget penggulir, sehingga seluruh field tetap bisa dijangkau dengan menggulir layar.
+
+4. GlobalKey<FormState> adalah kunci unik yang dipasang pada widget Form agar kita bisa mengakses FormState dari luar, misalnya dari onPressed tombol Simpan. validator adalah fungsi pada setiap TextFormField yang menerima teks yang dimasukkan pengguna, lalu mengembalikan pesan error jika nilainya tidak valid atau null jika valid. validate() adalah metode pada FormState yang dipanggil lewat _formKey.currentState!.validate(), dan ia menjalankan seluruh fungsi validator pada field di dalam form. Jika semuanya mengembalikan null, validate() bernilai true dan data boleh diproses, sedangkan jika ada satu saja yang gagal, pesan error ditampilkan dan data tidak disimpan. Contoh nilai yang ditolak: field harga diisi dengan angka negatif seperti -5000, atau field nama dibiarkan kosong atau hanya berisi spasi. Memilih jenis input atau papan ketik saja (misalnya keyboardType: TextInputType.number) belum cukup karena itu hanya mengatur tampilan papan ketik, bukan memeriksa isi yang sebenarnya. Pengguna masih bisa menempelkan teks (paste), mengisi angka yang tidak masuk akal, atau mengosongkan field, sehingga validasi tetap diperlukan untuk menjamin data yang masuk benar-benar sesuai aturan.
+
+
+## Riwayat Penggunaan Generative AI - Tugas 8
+
+Untuk pengerjaan tugas kali ini, saya menggunakan generative AI untuk memeriksa checklist pengerjaan tugas yang disesuaikan dengan kondisi projek saya saat ini yang sudah dibuat mengikuti panduan Tutorial 9. Generative AI memeberikan checklist tugas yang belum diselesaikan, memandu dalam mengerjakan checklist pengerjaan tugas, dan memeriksa hasil akhir dari pengerjaan Tugas 8.
+
+- https://chatgpt.com/s/cx_6b046e55255081918db9b0e55c6d6d73
+
 ## Panduan Setup
 
 ### Prasyarat

@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:myportofolio_mobile/screens/experience_form.dart';
 import 'package:myportofolio_mobile/screens/project_form.dart';
 
 class ItemHomepage {
@@ -27,7 +28,9 @@ class ItemCard extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              SnackBar(content: Text("Kamu telah menekan tombol ${item.name}!"))
+              SnackBar(
+                content: Text("Kamu telah menekan tombol ${item.name}!"),
+              ),
             );
 
           // Navigate ke halaman yang sesuai
@@ -35,8 +38,15 @@ class ItemCard extends StatelessWidget {
             // TODO: Gunakan Navigator.push() untuk melakukan navigasi ke MaterialPageRoute yang mencakup ProjectFormPage
             Navigator.push(
               context,
+              MaterialPageRoute(builder: (context) => const ProjectFormPage()),
+            );
+          }
+
+          if (item.name == "Tambah Pengalaman") {
+            Navigator.push(
+              context,
               MaterialPageRoute(
-                builder: (context) => const ProjectFormPage(),
+                builder: (context) => const ExperienceFormPage(),
               ),
             );
           }
@@ -47,11 +57,7 @@ class ItemCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  item.icon,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
+                Icon(item.icon, color: Colors.white, size: 30.0),
                 const Padding(padding: EdgeInsets.all(3)),
                 Text(
                   item.name,
